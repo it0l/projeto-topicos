@@ -1,0 +1,15 @@
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\bin\Debug\net10.0\projeto-topicos.exe
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\bin\Debug\net10.0\projeto-topicos.deps.json
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\bin\Debug\net10.0\projeto-topicos.runtimeconfig.json
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\bin\Debug\net10.0\projeto-topicos.dll
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\bin\Debug\net10.0\projeto-topicos.pdb
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\obj\Debug\net10.0\projeto-topicos.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\obj\Debug\net10.0\projeto-topicos.AssemblyInfoInputs.cache
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\obj\Debug\net10.0\projeto-topicos.AssemblyInfo.cs
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\obj\Debug\net10.0\projeto-topicos.csproj.CoreCompileInputs.cache
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\obj\Debug\net10.0\projeto-topicos.sourcelink.json
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\obj\Debug\net10.0\projeto-topicos.dll
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\obj\Debug\net10.0\refint\projeto-topicos.dll
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\obj\Debug\net10.0\projeto-topicos.pdb
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\obj\Debug\net10.0\projeto-topicos.genruntimeconfig.cache
+C:\Users\i5\Desktop\projeto-topicos\projeto-topicos\obj\Debug\net10.0\ref\projeto-topicos.dll
