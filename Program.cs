@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 class Visitante
 {
-    // 1. Criamos a lista estática AQUI dentro para guardar os cadastros
     private static List<Visitante> listaVisitantes = new List<Visitante>();
 
     public string Nome { get; set; }
@@ -22,6 +21,11 @@ class Visitante
         return $"Nome: {Nome} | Idade: {Idade} | Altura: {Altura}m";
     }
 
+    public static List<Visitante> GetLista()
+    {
+        return listaVisitantes;
+    }
+
     public static void CadastrarVisitante()
     {
         Console.WriteLine("CADASTRO DE VISITANTE");
@@ -35,7 +39,6 @@ class Visitante
         double altura = double.Parse(Console.ReadLine());
 
         Visitante novoVisitante = new Visitante(nome, idade, altura);
-        
         listaVisitantes.Add(novoVisitante);
         
         Console.WriteLine("Visitante cadastrado com sucesso!");
@@ -44,7 +47,6 @@ class Visitante
     public static void ListarVisitantes()
     {
         Console.WriteLine("LISTA DE VISITANTES");
-        
         if (listaVisitantes.Count == 0)
         {
             Console.WriteLine("Nenhum visitante cadastrado.");
@@ -61,66 +63,114 @@ class Visitante
     public static void BuscarVisitantePorNome()
     {
         Console.WriteLine("BUSCA DE VISITANTE");
-        Console.Write("Digite o nome do visitante que procura: ");
+        Console.Write("Digite o nome: ");
         string nomeBuscar = Console.ReadLine();
-        bool econtrado= false;
+        bool encontrado = false;
 
         foreach (Visitante v in listaVisitantes)
         {
             if (v.Nome.ToLower() == nomeBuscar.ToLower())
             {
                 Console.WriteLine(v);
-                econtrado = true;
+                encontrado = true;
             }
         }
 
-        if (!econtrado)
-        {
-            Console.WriteLine("Visitante não encontrado.");
-        }
-
-
-
-        
+        if (!encontrado) Console.WriteLine("Visitante não encontrado.");
     }
 
     public static void RemoverVisitante()
     {
         Console.WriteLine("REMOVER VISITANTE");
-        Console.WriteLine("BUSCA DE VISITANTE");
-        Console.Write("Digite o nome do visitante que deseja remover: ");
+        Console.Write("Nome para remover: ");
         string nomeBuscar = Console.ReadLine();
-        bool econtrado= false;
 
-        foreach (Visitante v in listaVisitantes)
+        for (int i = 0; i < listaVisitantes.Count; i++)
         {
-            if (v.Nome.ToLower() == nomeBuscar.ToLower())
+            if (listaVisitantes[i].Nome.ToLower() == nomeBuscar.ToLower())
             {
-                Console.WriteLine(v);
-                econtrado = true;
-                listaVisitantes.Remove(v);
+                listaVisitantes.RemoveAt(i);
                 Console.WriteLine("Visitante removido com sucesso!");
-                break;
+                return;
             }
         }
-
-        if (!econtrado)
-        {
-            Console.WriteLine("Visitante não encontrado.");
-        }
-        
+        Console.WriteLine("Visitante não encontrado.");
     }
 }
 
 class Atracao
 {
+    private static List<Atracao> listaAtracoes = new List<Atracao>();
+
     public string Nome { get; set; }
     public int Capacidade { get; set; }
-    
-    public Atracao(string nome, int capacidade)
+    public double AlturaMinima { get; set; }
+
+    public Atracao(string nome, int capacidade, double alturaMinima)
     {
         Nome = nome;
         Capacidade = capacidade;
+        AlturaMinima = alturaMinima;
+    }
+
+    public override string ToString()
+    {
+        return $"Nome: {Nome} | Capacidade: {Capacidade} | Altura: {AlturaMinima}m";
+    }
+
+    public static List<Atracao> GetLista()
+    {
+        return listaAtracoes;
+    }
+
+    public static void CadastrarAtracao()
+    {
+        Console.WriteLine("CADASTRO DE ATRACAO");
+        Console.Write("Nome da atracao: ");
+        string nome = Console.ReadLine();
+
+        Console.Write("Capacidade: ");
+        int capacidade = int.Parse(Console.ReadLine());
+
+        Console.Write("Altura minima: ");
+        double alturaMinima = double.Parse(Console.ReadLine());
+
+        listaAtracoes.Add(new Atracao(nome, capacidade, alturaMinima));
+        Console.WriteLine("Atracao cadastrada!");
+    }
+
+    public static void ListarAtracoes()
+    {
+        Console.WriteLine("LISTA DE ATRACOES");
+        if (listaAtracoes.Count == 0)
+        {
+            Console.WriteLine("Nenhuma atracao cadastrada.");
+        }
+        else
+        {
+            foreach (var a in listaAtracoes)
+            {
+                Console.WriteLine(a);
+            }
+        }
+    }
+
+    public static void RemoverAtracao()
+    {
+        Console.WriteLine("REMOVER ATRACAO");
+        Console.Write("Nome da atracao para remover: ");
+        string busca = Console.ReadLine();
+
+        for (int i = 0; i < listaAtracoes.Count; i++)
+        {
+            if (listaAtracoes[i].Nome.ToLower() == busca.ToLower())
+            {
+                listaAtracoes.RemoveAt(i);
+                Console.WriteLine("Atracao removida!");
+                return;
+            }
+        }
+        Console.WriteLine("Atracao nao encontrada.");
     }
 }
 
@@ -128,59 +178,103 @@ class RegraNegocio
 {
     public static void LiberarEntradaNoBrinquedo()
     {
-        Console.WriteLine("Liberando entrada no brinquedo...");
-        
+        Console.WriteLine("VERIFICAR ENTRADA");
+
+        if (Visitante.GetLista().Count == 0 || Atracao.GetLista().Count == 0)
+        {
+            Console.WriteLine("Cadastre visitantes e atracoes primeiro.");
+            return;
+        }
+
+        Console.Write("Nome do visitante: ");
+        string nomeV = Console.ReadLine();
+
+        Visitante vEncontrado = null;
+        foreach (var v in Visitante.GetLista())
+        {
+            if (v.Nome.ToLower() == nomeV.ToLower())
+            {
+                vEncontrado = v;
+            }
+        }
+
+        if (vEncontrado == null)
+        {
+            Console.WriteLine("Visitante nao encontrado.");
+            return;
+        }
+
+        Console.WriteLine("Escolha a atracao:");
+        var listaA = Atracao.GetLista();
+        for (int i = 0; i < listaA.Count; i++)
+        {
+            Console.WriteLine($"{i} - {listaA[i].Nome}");
+        }
+
+        int escolha = int.Parse(Console.ReadLine());
+        Atracao aEscolhida = listaA[escolha];
+
+        if (vEncontrado.Altura >= aEscolhida.AlturaMinima)
+        {
+            Console.WriteLine("Entrada LIBERADA!");
+        }
+        else
+        {
+            Console.WriteLine("Entrada NEGADA por altura insuficiente.");
+        }
     }
-}  
+}
 
 class Program
 {
     static void Main()
     {
-        int opcao;
-        do
+        int opcao = -1;
+        while (opcao != 0)
         {
             Menu();
-            opcao = int.Parse(Console.ReadLine());
-
-            switch(opcao)
+            if (int.TryParse(Console.ReadLine(), out opcao))
             {
-                case 1:
-                    Visitante.CadastrarVisitante();
-                    break;
-                case 2:
-                    Visitante.ListarVisitantes();
-                    break;
-                case 3:
-                    Visitante.BuscarVisitantePorNome();
-                    break;
-                case 4:
-                    Visitante.RemoverVisitante();
-                    break;
-               //  case 5:
-               //      Atracao.CadastrarAtracao();
-               //      break;
-               //  case 6:
-               //      Atracao.ListarAtracoes();
-                    break;
-                case 7:
-                    RegraNegocio.LiberarEntradaNoBrinquedo();
-                    break;
-                case 0:
-                    Console.WriteLine("Saindo do sistema...");
-                    break;
-                default:
-                    Console.WriteLine("Opção inválida. Tente novamente.");
-                    break;
+                switch (opcao)
+                {
+                    case 1:
+                     Visitante.CadastrarVisitante();
+                     break;
+                    case 2:
+                     Visitante.ListarVisitantes();
+                     break;
+                    case 3: 
+                     Visitante.BuscarVisitantePorNome(); 
+                     break;
+                    case 4:
+                     Visitante.RemoverVisitante(); 
+                     break;
+                    case 5:
+                     Atracao.CadastrarAtracao(); 
+                     break;
+                    case 6:
+                     Atracao.ListarAtracoes(); 
+                     break;
+                    case 7:
+                     Atracao.RemoverAtracao(); 
+                     break;
+                    case 8:
+                     RegraNegocio.LiberarEntradaNoBrinquedo(); 
+                     break;
+                    case 0:
+                     Console.WriteLine("Saindo..."); 
+                     break;
+                    default:
+                     Console.WriteLine("Opcao invalida."); 
+                     break;
+                }
             }
-
-            if(opcao != 0)
+            if (opcao != 0)
             {
                 Console.WriteLine("\nPressione Enter para continuar...");
                 Console.ReadLine();
             }
-
-        } while(opcao != 0);
+        }
     }
 
     static void Menu()
@@ -195,8 +289,9 @@ class Program
         Console.WriteLine("-------------- ATRAÇÕES --------------");
         Console.WriteLine("5 - Cadastrar Atração");
         Console.WriteLine("6 - Listar Atrações");
+        Console.WriteLine("7 - Remover Atração");
         Console.WriteLine("---------- REGRA DE NEGÓCIO ----------");
-        Console.WriteLine("7 - Liberar Entrada no Brinquedo"); 
+        Console.WriteLine("8 - Liberar Entrada no Brinquedo"); 
         Console.WriteLine("--------------------------------------");
         Console.WriteLine("0 - Sair"); 
         Console.Write("\nEscolha uma opção: ");
